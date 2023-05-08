@@ -103,3 +103,7 @@ Doctor.forEach((Doctor) => {
     `--id doctor: ${Doctor.idDoctor}--Nombre: ${Doctor.NombreDo} -- ${Doctor.Identificacion}`
   );
 });
+
+module.exports = {
+  Doctor
+}
