@@ -1,0 +1,53 @@
+version: '3'
+
+
+services:
+  categories:
+    build: ./paciente
+    depends_on:
+      - datacategories
+    environment:
+      - PORT=2500
+      - MONGODB_CNN=mongodb://datacategories:27017/test
+    # ports:
+    #   - "2500:2500"
+  products:
+    build: ./cita
+    depends_on:
+      - dataproducts
+    environment:
+      - PORT=2500
+      - MONGODB_CNN=mongodb://dataproducts:27017/test
+
+  doctoores:
+    build: ./doctor
+    depends_on:
+      - datadoctores
+    environment:
+      - PORT=2500
+      - MONGODB_CNN=mongodb://datadoctores:27017/test
+
+
+  datadoctores:
+    image: mongo
+    # ports:
+    #   - "27017:27017"
+
+  datacategories:
+    image: mongo
+    # ports:
+    #   - "27017:27017"
+  dataproducts:
+    image: mongo
+    # ports:
+    #   - "27017:27017"
+  nginx:
+    image: nginx:latest
+    ports:
+      - "3500:3500"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - categories
+      - products
+      - doctores
